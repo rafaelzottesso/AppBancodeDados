@@ -5,17 +5,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orm.SchemaGenerator;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
 
+import java.util.List;
+
 public class CadastroPessoaActivity extends AppCompatActivity {
 
     private EditText nome;
     private EditText email;
     private Button cadastrar;
+
+    private TextView pessoas;
+    private Button listarPessoas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,9 @@ public class CadastroPessoaActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editTextEmail);
 
         cadastrar = (Button) findViewById(R.id.buttonCadastrar);
+
+        pessoas = (TextView) findViewById(R.id.textViewPessoas);
+        listarPessoas = (Button) findViewById(R.id.buttonListar);
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +59,29 @@ public class CadastroPessoaActivity extends AppCompatActivity {
                 // Limpa os campos
                 nome.setText("");
                 email.setText("");
+
+            }
+        });
+
+        listarPessoas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Lista todas as pessoas
+                List<Pessoa> listaDePessoas = Pessoa.listAll(Pessoa.class);
+
+                // Cria uma String para concatenar o nome das pessoas
+                String lista = "";
+
+                // Faz um foreach nessa lista de pessoas
+                for (Pessoa p: listaDePessoas ) {
+
+                    lista = lista + p.getNome() + "\n";
+                    
+                }
+
+                // Coloca a lista de pessoas no TextView
+                pessoas.setText(lista);
 
             }
         });

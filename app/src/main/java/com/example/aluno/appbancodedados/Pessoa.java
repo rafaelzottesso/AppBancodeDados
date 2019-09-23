@@ -11,8 +11,6 @@ public class Pessoa extends SugarRecord {
 
     }
 
-    
-
     public String getNome() {
         return nome;
     }
